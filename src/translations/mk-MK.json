@@ -1,0 +1,16 @@
+{
+  "APP_NAME": "ngX-Rocket",
+  "About": "За",
+  "Hello world !": "Здраво свете !",
+  "Home": "Дома",
+  "Logged in as": "Најавен како",
+  "Login": "Најава",
+  "Logout": "Одјва",
+  "Password": "Шифра",
+  "Password is required": "Шифрата е задолжителна",
+  "Username": "Корисничко име",
+  "Username is required": "Корисничкото име е задолжително",
+  "Username or password incorrect.": "Корисничкото име или шифрата се неточни.",
+  "Remember me": "Запамти ме",
+  "Version": "Верзија"
+}
