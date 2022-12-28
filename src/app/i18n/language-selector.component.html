@@ -1,4 +1,4 @@
-<div [ngClass]="{ 'nav-item': inNavbar }" ngbDropdown>
+<div [ngClass]="{ 'nav-item': inNavbar }" ngbDropdown display="dynamic">
   <a *ngIf="inNavbar; else button" id="language-dropdown" class="nav-link" ngbDropdownToggle display="dynamic">
     {{ currentLanguage | translate }}
   </a>
