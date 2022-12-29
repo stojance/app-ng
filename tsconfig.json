@@ -16,14 +16,10 @@
     "importHelpers": true,
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
+    "strictPropertyInitialization": false,
     "target": "es2020",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2020", "dom"],
     "baseUrl": "./",
     "paths": {
       "@app/*": ["src/app/*"],
@@ -38,6 +34,7 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    "preserveWhitespaces": true
+    "preserveWhitespaces": true,
+    "strictDomEventTypes": false
   }
 }
