@@ -47,6 +47,9 @@ export class LoginComponent implements OnInit {
       )
       .subscribe(
         (credentials) => {
+          if (credentials.error) {
+            this.error = credentials.error;
+          }
           log.debug(`${credentials.username} successfully logged in`);
           log.debug(JSON.stringify(credentials));
           if (credentials.token) {
