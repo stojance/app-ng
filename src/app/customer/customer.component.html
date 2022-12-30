@@ -3,13 +3,10 @@
   <h5 class="card-header">Customers List</h5>
   <div class="card-body">
     <div class="card-title">
-      <i class="fas fa-user-plus"></i>
-      <input
-        type="button"
-        [value]="'Add New' | translate"
-        (click)="AddNew()"
-        class="btn btn-primary fas fa-coffee fa-sm"
-      />
+      <button (click)="AddNew()" class="btn btn-primary fas fa-coffee fa-sm">
+        <i class="fas fa-user-plus"></i>
+        <span translate>Add New</span>
+      </button>
     </div>
     <table class="table table-responsive table-bordered table-striped">
       <thead class="table-dark">
