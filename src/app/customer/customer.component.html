@@ -36,6 +36,7 @@
       <input
         type="text"
         class="form-control"
+        [ngClass]="{ 'is-valid': F.valid && F.touched, 'is-invalid': F.invalid && F.touched }"
         id="fname"
         name="FName"
         [(ngModel)]="this.FName"
@@ -53,6 +54,7 @@
       <input
         type="text"
         class="form-control"
+        [ngClass]="{ 'is-valid': L.valid && F.touched, 'is-invalid': L.invalid && F.touched }"
         id="lname"
         name="LName"
         [(ngModel)]="this.LName"
