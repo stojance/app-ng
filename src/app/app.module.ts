@@ -8,8 +8,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { environment } from '@env/environment';
-import { RouteReusableStrategy, ApiPrefixInterceptor, ErrorHandlerInterceptor, SharedModule } from '@shared';
-import { AuthModule } from '@app/auth';
+import {
+  RouteReusableStrategy,
+  ApiPrefixInterceptor,
+  ErrorHandlerInterceptor,
+  TokenInterceptor,
+  SharedModule,
+} from '@shared';
+import { AuthModule, CredentialsService } from '@app/auth';
 import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
@@ -39,6 +45,11 @@ import { AppRoutingModule } from './app-routing.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiPrefixInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
       multi: true,
     },
     {
