@@ -1,57 +1,51 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Customer } from '../models/customer';
 import { NgForm } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { Customer } from '../models/customer';
+import { CustomerService } from './customer.service';
+import { AuthenticationService } from '@app/auth';
+import { CredentialsService } from '@app/auth';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
   styleUrls: ['./customer.component.scss'],
+  providers: [CustomerService],
 })
 export class CustomerComponent implements OnInit {
-  Customers: Array<Customer>;
-  IsAddNew: boolean;
+  Customers$: Observable<Array<Customer>>;
+  IsAddNew$: Observable<boolean>;
   FName: string = '';
   LName: string = '';
   @ViewChild('myForm') MyForm: NgForm;
 
-  constructor() {
-    this.IsAddNew = false;
-    //this.Reset();
-    this.Customers = new Array<Customer>();
-    this.Customers.push(new Customer('Ацо', 'Пејович'));
-    this.Customers.push(new Customer('Мирко', 'Попов'));
-    this.Customers.push(new Customer('Красимир', 'Каракачанов'));
-    this.Customers.push(new Customer('Рајко', 'Жинзифов'));
+  constructor(private customerService: CustomerService, private authenticationService: AuthenticationService) {
+    this.IsAddNew$ = customerService.IsAddNew$;
+    this.Customers$ = customerService.Customers$;
   }
 
   ngOnInit(): void {}
 
-  Save() {
-    this.Customers.push(new Customer(this.FName, this.LName));
-    this.Cancel();
+  save() {
+    this.customerService.save(new Customer(this.FName, this.LName));
+    this.cancel();
   }
 
-  AddNew(): void {
-    this.IsAddNew = true;
+  addNew(): void {
+    this.customerService.setAddNew();
   }
 
-  Cancel(): void {
-    this.IsAddNew = false;
-    this.Reset();
+  cancel(): void {
+    this.customerService.setList();
+    this.reset();
   }
 
-  Reset(): void {
+  reset(): void {
     this.FName = '';
     this.LName = '';
     this.MyForm.reset();
   }
 
-  /*
-  ChangeFName(name: string): void {
-    this.FName = name;
+  logout() {
+    this.authenticationService.logout();
   }
-
-  ChangeLName(name: string): void {
-    this.LName = name;
-  }
-  */
 }

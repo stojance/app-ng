@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
@@ -16,11 +17,12 @@ const log = new Logger('Login');
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   version: string | null = environment.version;
   error: string | undefined;
   loginForm!: FormGroup;
   isLoading = false;
+  isAuthenticationFailed$: Observable<boolean>;
 
   constructor(
     private router: Router,
@@ -30,47 +32,23 @@ export class LoginComponent implements OnInit {
     private credentialsService: CredentialsService
   ) {
     this.createForm();
+    this.isAuthenticationFailed$ = this.authenticationService.isAuthenticationFailedObserver$;
   }
 
-  ngOnInit() {}
+  ngOnDestroy(): void {}
+
+  ngOnInit(): void {}
 
   login() {
+    this.error = '';
     this.isLoading = true;
-    const login$ = this.authenticationService.login(this.loginForm.value);
-    login$
-      .pipe(
-        finalize(() => {
-          this.loginForm.markAsPristine();
-          this.isLoading = false;
-        }),
-        untilDestroyed(this)
-      )
-      .subscribe(
-        (credentials) => {
-          if (credentials.error) {
-            this.error = credentials.error;
-          }
-          log.debug(`${credentials.username} successfully logged in`);
-          log.debug(JSON.stringify(credentials));
-          if (credentials.token) {
-            this.credentialsService.setCredentials(credentials);
-            log.debug(':)');
-            this.router.navigate([this.route.snapshot.queryParams['redirect'] || 'customer'], { replaceUrl: true });
-          } else {
-            log.debug(':(');
-            this.router.navigate([this.route.snapshot.queryParams['redirect'] || '/'], { replaceUrl: true });
-          }
-        },
-        (error) => {
-          log.debug(`Login error: ${error}`);
-          this.error = error;
-        }
-      );
+    this.authenticationService.login(this.loginForm.value);
+    this.isLoading = false;
   }
 
   login_bkp() {
     this.isLoading = true;
-    const login$ = this.authenticationService.login(this.loginForm.value);
+    const login$ = this.authenticationService.login_bkp(this.loginForm.value);
     login$
       .pipe(
         finalize(() => {

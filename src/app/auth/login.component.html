@@ -14,7 +14,7 @@
             <i class="far fa-3x fa-user-circle text-muted"></i>
           </h4>
           <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-            <div class="alert alert-danger" [hidden]="!error || isLoading" translate>
+            <div class="alert alert-danger" translate *ngIf="isAuthenticationFailed$ | async">
               Username or password incorrect.
             </div>
             <div class="m-3">
@@ -24,6 +24,7 @@
                   class="form-control"
                   formControlName="username"
                   autocomplete="username"
+                  autofocus
                   [placeholder]="'Username' | translate"
                 />
                 <span hidden translate>Username</span>

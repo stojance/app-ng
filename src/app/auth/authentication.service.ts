@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Credentials, CredentialsService } from './credentials.service';
-
+import { Router, ActivatedRoute } from '@angular/router';
 export interface LoginContext {
   username: string;
   password: string;
@@ -17,7 +17,48 @@ export interface LoginContext {
   providedIn: 'root',
 })
 export class AuthenticationService {
-  constructor(private credentialsService: CredentialsService, private httpClient: HttpClient) {}
+  private _isAuthenticationFailedSubject: Subject<boolean>;
+  isAuthenticationFailedObserver$: Observable<boolean>;
+
+  constructor(
+    private credentialsService: CredentialsService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private httpClient: HttpClient
+  ) {
+    this._isAuthenticationFailedSubject = new Subject<boolean>();
+    this.isAuthenticationFailedObserver$ = this._isAuthenticationFailedSubject.asObservable();
+  }
+
+  login(context: LoginContext): void {
+    this.credentialsService.setCredentials();
+    const url = 'http://localhost:4000/signin';
+    this.httpClient.post(url, context).subscribe(
+      (data: any) => {
+        if (data.error) {
+          //this.error = data.error;
+          this._isAuthenticationFailedSubject.next(true);
+        }
+        if (data.token) {
+          this.credentialsService.setCredentials(data);
+          this.router.navigate([this.route.snapshot.queryParams['redirect'] || 'customer'], { replaceUrl: true });
+        }
+      },
+      (error) => {
+        //this.error = error;
+        this._isAuthenticationFailedSubject.next(true);
+      }
+    );
+  }
+  /**
+   * Logs out the user and clear credentials.
+   * @return True if the user was logged out successfully.
+   */
+  logout(): Observable<boolean> {
+    // Customize credentials invalidation here
+    this.credentialsService.setCredentials();
+    return of(true);
+  }
 
   /**
    * Authenticates the user.
@@ -33,21 +74,5 @@ export class AuthenticationService {
 
     this.credentialsService.setCredentials(data, context.remember);
     return of(data);
-  }
-
-  login(context: LoginContext): Observable<any> {
-    this.credentialsService.setCredentials();
-    const url = 'http://localhost:4000/signin';
-    return this.httpClient.post(url, context);
-  }
-
-  /**
-   * Logs out the user and clear credentials.
-   * @return True if the user was logged out successfully.
-   */
-  logout(): Observable<boolean> {
-    // Customize credentials invalidation here
-    this.credentialsService.setCredentials();
-    return of(true);
   }
 }
