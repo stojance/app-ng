@@ -44,12 +44,12 @@ import { AppRoutingModule } from './app-routing.module';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: ApiPrefixInterceptor,
+      useClass: TokenInterceptor,
       multi: true,
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: ApiPrefixInterceptor,
       multi: true,
     },
     {
