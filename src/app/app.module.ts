@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -15,13 +15,15 @@ import {
   TokenInterceptor,
   SharedModule,
 } from '@shared';
-import { AuthModule, CredentialsService } from '@app/auth';
+import { AuthModule } from '@app/auth';
 import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
 import { CustomerModule } from './customer/customer.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { initializeConfig } from './@shared/services/app-initializer';
+import { AppConfigService } from './@shared/services/app-config.service';
 
 @NgModule({
   imports: [
@@ -43,15 +45,21 @@ import { AppRoutingModule } from './app-routing.module';
   declarations: [AppComponent],
   providers: [
     {
+      provide: APP_INITIALIZER,
+      useFactory: initializeConfig,
+      multi: true,
+      deps: [AppConfigService],
+    },
+    {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true,
     },
-    {
+    /*{
       provide: HTTP_INTERCEPTORS,
       useClass: ApiPrefixInterceptor,
       multi: true,
-    },
+    },*/
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerInterceptor,

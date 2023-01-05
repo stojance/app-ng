@@ -3,6 +3,8 @@ import { Observable, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Credentials, CredentialsService } from './credentials.service';
 import { Router, ActivatedRoute } from '@angular/router';
+//import { environment } from 'src/environments/environment';
+import { AppConfigService } from '@shared/services/app-config.service';
 export interface LoginContext {
   username: string;
   password: string;
@@ -19,20 +21,23 @@ export interface LoginContext {
 export class AuthenticationService {
   private _isAuthenticationFailedSubject: Subject<boolean>;
   isAuthenticationFailedObserver$: Observable<boolean>;
+  API_URL = '';
 
   constructor(
     private credentialsService: CredentialsService,
     private router: Router,
     private route: ActivatedRoute,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private appConfigService: AppConfigService
   ) {
     this._isAuthenticationFailedSubject = new Subject<boolean>();
     this.isAuthenticationFailedObserver$ = this._isAuthenticationFailedSubject.asObservable();
+    this.API_URL = this.appConfigService.apiUrl;
   }
 
   login(context: LoginContext): void {
     this.credentialsService.setCredentials();
-    const url = 'http://localhost:4000/signin';
+    const url = `${this.API_URL}/signin`; //'http://localhost:4000/signin';
     this.httpClient.post(url, context).subscribe(
       (data: any) => {
         if (data.error) {

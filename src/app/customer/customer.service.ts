@@ -4,21 +4,23 @@ import { Customer } from '@app/models/customer';
 import { CustomerItemResponse } from '@app/models/HttpResponses/customer.response';
 import { NewCustomer } from '@app/models/HttpRequests/newcustomer.requests';
 import { HttpClient } from '@angular/common/http';
-import { CredentialsService } from '@app/auth';
 import { map } from 'rxjs/operators';
+//import { environment } from 'src/environments/environment';
+import { AppConfigService } from '@shared/services/app-config.service';
 @Injectable()
 export class CustomerService {
   private _IsAddNewSubject: BehaviorSubject<boolean>;
   IsAddNew$: Observable<boolean>;
   private _CustomersSubject: Subject<Array<Customer>>;
   Customers$: Observable<Array<Customer>>;
-  private URL = 'http://localhost:4000';
+  private URL = ''; //'http://localhost:4000';
 
-  constructor(private httpClient: HttpClient, private credentialsService: CredentialsService) {
+  constructor(private httpClient: HttpClient, private appConfigService: AppConfigService) {
     this._IsAddNewSubject = new BehaviorSubject<boolean>(false);
     this.IsAddNew$ = this._IsAddNewSubject.asObservable();
     this._CustomersSubject = new Subject<Array<Customer>>();
     this.Customers$ = this._CustomersSubject.asObservable();
+    this.URL = this.appConfigService.apiUrl;
 
     this.loadCustomers();
   }
