@@ -13,23 +13,29 @@ export class CustomerService {
   IsAddNew$: Observable<boolean>;
   private _CustomersSubject: Subject<Array<Customer>>;
   Customers$: Observable<Array<Customer>>;
+  private _IsLoadingSubject: BehaviorSubject<boolean>;
+  IsLoading$: Observable<boolean>;
 
   constructor(private httpClient: HttpClient, private appConfigService: AppConfigService) {
     this._IsAddNewSubject = new BehaviorSubject<boolean>(false);
     this.IsAddNew$ = this._IsAddNewSubject.asObservable();
     this._CustomersSubject = new Subject<Array<Customer>>();
     this.Customers$ = this._CustomersSubject.asObservable();
+    this._IsLoadingSubject = new BehaviorSubject<boolean>(false);
+    this.IsLoading$ = this._IsLoadingSubject.asObservable();
 
     this.loadCustomers();
   }
 
   loadCustomers() {
+    this._IsLoadingSubject.next(true);
     this.httpClient
       .get<Array<CustomerItemResponse>>(`${this.appConfigService.apiUrl}/customers`)
       .pipe(map((api_response) => api_response.map((c: CustomerItemResponse) => new Customer(c.firstName, c.lastName))))
       .subscribe((response) => {
         //console.log(response);
         this._CustomersSubject.next(response);
+        this._IsLoadingSubject.next(false);
       });
   }
 

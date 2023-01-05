@@ -14,6 +14,7 @@ import { CredentialsService } from '@app/auth';
 export class CustomerComponent implements OnInit {
   Customers$: Observable<Array<Customer>>;
   IsAddNew$: Observable<boolean>;
+  IsLoading$: Observable<boolean>;
   FName: string = '';
   LName: string = '';
   @ViewChild('myForm') MyForm: NgForm;
@@ -21,6 +22,7 @@ export class CustomerComponent implements OnInit {
   constructor(private customerService: CustomerService, private authenticationService: AuthenticationService) {
     this.IsAddNew$ = customerService.IsAddNew$;
     this.Customers$ = customerService.Customers$;
+    this.IsLoading$ = customerService.IsLoading$;
   }
 
   ngOnInit(): void {}

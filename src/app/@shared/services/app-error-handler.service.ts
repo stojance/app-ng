@@ -8,10 +8,10 @@ export class AppErrorsHandler implements ErrorHandler {
   constructor(private router: Router, private zone: NgZone) {}
 
   handleError(error: Error | HttpErrorResponse) {
-    if (!environment.production) {
+    /*if (!environment.production) {
       alert('Run-time error occured. Kindly check developer tools');
       throw error;
-    }
+    }*/
     if (error instanceof HttpResponseBase) {
       this.HandleServerSideError(error); // Indicates its a server side error
     } else {
@@ -22,6 +22,7 @@ export class AppErrorsHandler implements ErrorHandler {
   private HandleServerSideError(error: HttpErrorResponse) {
     if (error.status === 0) {
       alert('Server is not running');
+      this.zone.run(() => this.router.navigate(['/error']));
     } else if (error.status === 401) {
       this.zone.run(() => this.router.navigate(['/login']));
     } else {
