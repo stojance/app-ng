@@ -21,7 +21,6 @@ export interface LoginContext {
 export class AuthenticationService {
   private _isAuthenticationFailedSubject: Subject<boolean>;
   isAuthenticationFailedObserver$: Observable<boolean>;
-  API_URL = '';
 
   constructor(
     private credentialsService: CredentialsService,
@@ -32,12 +31,11 @@ export class AuthenticationService {
   ) {
     this._isAuthenticationFailedSubject = new Subject<boolean>();
     this.isAuthenticationFailedObserver$ = this._isAuthenticationFailedSubject.asObservable();
-    this.API_URL = this.appConfigService.apiUrl;
   }
 
   login(context: LoginContext): void {
     this.credentialsService.setCredentials();
-    const url = `${this.API_URL}/signin`; //'http://localhost:4000/signin';
+    const url = `${this.appConfigService.apiUrl}/signin`; //'http://localhost:4000/signin';
     this.httpClient.post(url, context).subscribe(
       (data: any) => {
         if (data.error) {

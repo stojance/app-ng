@@ -13,21 +13,19 @@ export class CustomerService {
   IsAddNew$: Observable<boolean>;
   private _CustomersSubject: Subject<Array<Customer>>;
   Customers$: Observable<Array<Customer>>;
-  private URL = ''; //'http://localhost:4000';
 
   constructor(private httpClient: HttpClient, private appConfigService: AppConfigService) {
     this._IsAddNewSubject = new BehaviorSubject<boolean>(false);
     this.IsAddNew$ = this._IsAddNewSubject.asObservable();
     this._CustomersSubject = new Subject<Array<Customer>>();
     this.Customers$ = this._CustomersSubject.asObservable();
-    this.URL = this.appConfigService.apiUrl;
 
     this.loadCustomers();
   }
 
   loadCustomers() {
     this.httpClient
-      .get<Array<CustomerItemResponse>>(`${this.URL}/customers`)
+      .get<Array<CustomerItemResponse>>(`${this.appConfigService.apiUrl}/customers`)
       .pipe(map((api_response) => api_response.map((c: CustomerItemResponse) => new Customer(c.firstName, c.lastName))))
       .subscribe((response) => {
         //console.log(response);
@@ -46,7 +44,7 @@ export class CustomerService {
 
   save(customer: Customer) {
     const new_c = new NewCustomer(customer.FName, customer.LName);
-    this.httpClient.post(`${this.URL}/customers`, new_c).subscribe((response) => {
+    this.httpClient.post(`${this.appConfigService.apiUrl}/customers`, new_c).subscribe((response) => {
       console.log(response);
       this.setList();
     });
