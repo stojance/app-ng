@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -20,10 +20,12 @@ import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
 import { CustomerModule } from './customer/customer.module';
+import { ErrorModule } from './error/error.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { initializeConfig } from './@shared/services/app-initializer';
 import { AppConfigService } from './@shared/services/app-config.service';
+import { AppErrorsHandler } from './@shared/services/app-error-handler.service';
 
 @NgModule({
   imports: [
@@ -39,6 +41,7 @@ import { AppConfigService } from './@shared/services/app-config.service';
     HomeModule,
     AboutModule,
     CustomerModule,
+    ErrorModule,
     AuthModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
@@ -68,6 +71,10 @@ import { AppConfigService } from './@shared/services/app-config.service';
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy,
+    },
+    {
+      provide: ErrorHandler,
+      useClass: AppErrorsHandler,
     },
   ],
   bootstrap: [AppComponent],

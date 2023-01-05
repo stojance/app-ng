@@ -27,4 +27,8 @@ export class HomeComponent implements OnInit {
         this.quote = quote;
       });
   }
+
+  errorClick() {
+    throw new Error('Error');
+  }
 }
