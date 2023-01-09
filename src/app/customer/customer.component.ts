@@ -15,9 +15,6 @@ export class CustomerComponent implements OnInit {
   Customers$: Observable<Array<Customer>>;
   IsAddNew$: Observable<boolean>;
   IsLoading$: Observable<boolean>;
-  FName: string = '';
-  LName: string = '';
-  @ViewChild('myForm') MyForm: NgForm;
 
   constructor(private customerService: CustomerService, private authenticationService: AuthenticationService) {
     this.IsAddNew$ = customerService.IsAddNew$;
@@ -27,8 +24,8 @@ export class CustomerComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  save() {
-    this.customerService.save(new Customer(this.FName, this.LName));
+  save(customer: Customer) {
+    this.customerService.save(customer);
     this.cancel();
   }
 
@@ -38,13 +35,6 @@ export class CustomerComponent implements OnInit {
 
   cancel(): void {
     this.customerService.setList();
-    this.reset();
-  }
-
-  reset(): void {
-    this.FName = '';
-    this.LName = '';
-    this.MyForm.reset();
   }
 
   logout() {
