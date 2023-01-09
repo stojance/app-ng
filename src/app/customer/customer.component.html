@@ -1,18 +1,19 @@
 <h2 class="text-center">Customers<app-loader [isLoading]="true" *ngIf="IsLoading$ | async"></app-loader></h2>
-
-<div class="card" *ngIf="(IsAddNew$ | async) === false; else AddNewTemplate">
-  <app-customer-list
-    [Customers$]="Customers$"
-    (OnAddNew)="addNew()"
-    *ngIf="(IsAddNew$ | async) === false; else AddNewTemplate"
-  ></app-customer-list>
-</div>
-<ng-template #AddNewTemplate>
-  <div class="row">
-    <div class="col-md-3 col-sm-12"></div>
-    <div class="col-md-6 col-sm-12">
-      <app-customer-add (OnSave)="save($event)" (OnCancel)="cancel()"></app-customer-add>
-    </div>
-    <div class="col-md-3 col-sm-12"></div>
+<div [hidden]="IsLoading$ | async">
+  <div class="card" *ngIf="(IsAddNew$ | async) === false; else AddNewTemplate">
+    <app-customer-list
+      [Customers$]="Customers$"
+      (OnAddNew)="addNew()"
+      *ngIf="(IsAddNew$ | async) === false; else AddNewTemplate"
+    ></app-customer-list>
   </div>
-</ng-template>
+  <ng-template #AddNewTemplate>
+    <div class="row">
+      <div class="col-md-3 col-sm-12"></div>
+      <div class="col-md-6 col-sm-12">
+        <app-customer-add (OnSave)="save($event)" (OnCancel)="cancel()"></app-customer-add>
+      </div>
+      <div class="col-md-3 col-sm-12"></div>
+    </div>
+  </ng-template>
+</div>
