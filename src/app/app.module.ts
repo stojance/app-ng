@@ -21,6 +21,7 @@ import { ShellModule } from './shell/shell.module';
 import { AboutModule } from './about/about.module';
 import { CustomerModule } from './customer/customer.module';
 import { ErrorModule } from './error/error.module';
+import { TreeModule } from './tree-nested/tree.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { initializeConfig } from './@shared/services/app-initializer';
@@ -43,6 +44,7 @@ import { AppErrorsHandler } from './@shared/services/app-error-handler.service';
     CustomerModule,
     ErrorModule,
     AuthModule,
+    TreeModule,
     AppRoutingModule, // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
