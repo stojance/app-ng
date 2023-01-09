@@ -13,6 +13,7 @@
         required
         minlength="3"
         #F="ngModel"
+        #firstName
       />
       <div class="alert alert-danger" [hidden]="!(F.dirty && F.errors?.['required'])">First Name is required</div>
       <div class="alert alert-danger" [hidden]="!(F.dirty && F.errors?.['minlength'])">
