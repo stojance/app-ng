@@ -1,4 +1,5 @@
-<h2 class="text-center">Customers<app-loader [isLoading]="true" *ngIf="IsLoading$ | async"></app-loader></h2>
+<h2 class="text-center">Customers</h2>
+<app-loader [isLoading]="true" *ngIf="IsLoading$ | async" ngClass="text-center"></app-loader>
 <div [hidden]="IsLoading$ | async">
   <div class="card" *ngIf="(IsAddNew$ | async) === false; else AddNewTemplate">
     <app-customer-list
