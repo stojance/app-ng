@@ -19,7 +19,7 @@ export interface SortEvent {
     '(click)': 'rotate()',
   },
 })
-export class NgbdSortableHeader {
+export class SortableHeaderDirective {
   @Input() sortable: SortColumn = '';
   @Input() direction: SortDirection = '';
   @Output() sort = new EventEmitter<SortEvent>();

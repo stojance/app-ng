@@ -21,8 +21,8 @@
     <span class="col col-form-label" *ngIf="service.loading$ | async">Loading...</span>
   </div>
 
-  <table class="table table-striped">
-    <thead>
+  <table class="table table-responsive table-bordered table-striped">
+    <thead class="table-primary">
       <tr>
         <th scope="col">#</th>
         <th scope="col" sortable="name" (sort)="onSort($event)">Country</th>

@@ -3,7 +3,7 @@ import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Country } from './country';
 import { CountryService } from './country.service';
-import { NgbdSortableHeader, SortEvent } from './sortable.directive';
+import { SortableHeaderDirective, SortEvent } from './sortable.directive';
 import { FormsModule } from '@angular/forms';
 import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,7 +16,7 @@ import { NgbPaginationModule, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootst
     FormsModule,
     AsyncPipe,
     NgbTypeaheadModule,
-    NgbdSortableHeader,
+    SortableHeaderDirective,
     NgbPaginationModule,
     NgIf,
   ],
@@ -28,7 +28,7 @@ export class TableCompleteComponent {
   countries$: Observable<Country[]>;
   total$: Observable<number>;
 
-  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
+  @ViewChildren(SortableHeaderDirective) headers: QueryList<SortableHeaderDirective>;
 
   constructor(public service: CountryService) {
     this.countries$ = service.countries$;
