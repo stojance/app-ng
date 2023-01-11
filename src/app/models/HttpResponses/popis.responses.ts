@@ -1,4 +1,4 @@
-export interface User {
+export class User {
   id: number;
   firstName: string;
   lastName: string;
@@ -8,7 +8,7 @@ export interface User {
   token: string;
 }
 
-export interface OS_Sredstva {
+export class OS_Sredstva {
   OS_ID: number;
   InventarenBroj: string;
   SeriskiBroj: string;
@@ -34,21 +34,21 @@ export interface OS_Sredstva {
   Status: number;
 }
 
-export interface OS_OrgEdinici {
+export class OS_OrgEdinici {
   OrgEdinica_ID: number;
   Naziv: string;
   Opis: string;
   Status: number;
 }
 
-export interface OS_Lokacii {
+export class OS_Lokacii {
   Lokacija_ID: number;
   Naziv: string;
   Opis: string;
   Status: number;
 }
 
-export interface OS_Spratovi {
+export class OS_Spratovi {
   Sprat_ID: number;
   Naziv: string;
   Opis: string;
@@ -56,7 +56,7 @@ export interface OS_Spratovi {
   Status: number;
 }
 
-export interface OS_Sobi {
+export class OS_Sobi {
   Soba_ID: number;
   Naziv: string;
   Opis: string;
@@ -64,7 +64,7 @@ export interface OS_Sobi {
   Status: number;
 }
 
-export interface OS_OdgovorniLica {
+export class OS_OdgovorniLica {
   OdgovornoLice_ID: number;
   Naziv: string;
   Opis: string;
@@ -72,7 +72,7 @@ export interface OS_OdgovorniLica {
   Status: number;
 }
 
-export interface V_Popisani {
+export class V_Popisani {
   UredBroj: number;
   OS_ID: number;
   InventarenBroj: string;
@@ -108,7 +108,7 @@ export interface V_Popisani {
   KorisnikNaziv: string;
 }
 
-export interface V_Nepopisani {
+export class V_Nepopisani {
   OS_ID: number;
   InventarenBroj: string;
   SeriskiBroj: string;
@@ -131,7 +131,7 @@ export interface V_Nepopisani {
   Cena: number;
 }
 
-export interface V_Popis {
+export class V_Popis {
   PopisBroj: number;
   UredBroj: number;
   OS_ID: number;
