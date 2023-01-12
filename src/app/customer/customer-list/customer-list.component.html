@@ -10,11 +10,9 @@
     </div>
     <div *ngIf="showTable">
       <!--<table datatable [dtOptions]="dtOptions" class="row-border hover"></table>-->
-      <table
-        datatable
-        [dtOptions]="dtOptions"
-        class="table table-responsive table-bordered table-striped hover"
-      ></table>
+      <table datatable [dtOptions]="dtOptions" class="table table-responsive table-bordered table-striped hover">
+        <thead class="table-primary"></thead>
+      </table>
       <p>Hello</p>
       <!--<table class="table table-responsive table-bordered table-striped">
         <thead class="table-primary">
