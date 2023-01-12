@@ -8,19 +8,23 @@
         <span translate>Add New</span>
       </button>
     </div>
-    <table class="table table-responsive table-bordered table-striped">
-      <thead class="table-primary">
-        <tr>
-          <th translate>First Name</th>
-          <th translate>Last Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of Customers$ | async">
-          <td>{{ item.FName }}</td>
-          <td>{{ item.LName }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="showTable">
+      <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+      <p>Hello</p>
+      <!--<table class="table table-responsive table-bordered table-striped">
+        <thead class="table-primary">
+          <tr>
+            <th translate>First Name</th>
+            <th translate>Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of Customers">
+            <td>{{ item.FName }}</td>
+            <td>{{ item.LName }}</td>
+          </tr>
+        </tbody>
+      </table>-->
+    </div>
   </div>
 </div>

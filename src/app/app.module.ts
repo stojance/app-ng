@@ -27,7 +27,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { initializeConfig } from './@shared/services/app-initializer';
 import { AppConfigService } from './@shared/services/app-config.service';
 import { AppErrorsHandler } from './@shared/services/app-error-handler.service';
-
 @NgModule({
   imports: [
     BrowserModule,
