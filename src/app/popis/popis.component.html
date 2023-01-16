@@ -16,6 +16,14 @@
 >
   Popisani {{ (popisani$ | async)?.length }}
 </button>
+<button
+  class="btn"
+  [ngClass]="tableToShow === 'NePopisani' ? 'btn-primary' : 'btn-secondary'"
+  (click)="loadNePopisani()"
+  [disabled]="isLoading$ | async"
+>
+  Nepopisani {{ (nePopisani$ | async)?.length }}
+</button>
 <div *ngIf="(isLoading$ | async) === false">
   <table
     datatable
@@ -25,6 +33,9 @@
   >
     <thead class="table-primary"></thead>
   </table>
+  <a class="btn btn-primary" [href]="sredstvaExportUrl" target="_blank" *ngIf="tableToShow === 'Sredstva'"
+    >Export to Excel</a
+  >
   <table
     datatable
     [dtOptions]="dtOptionsPopisani"
@@ -33,5 +44,18 @@
   >
     <thead class="table-primary"></thead>
   </table>
+  <a class="btn btn-primary" [href]="popisaniExportUrl" target="_blank" *ngIf="tableToShow === 'Popisani'"
+    >Export to Excel</a
+  >
+  <table
+    datatable
+    [dtOptions]="dtOptionsNePopisani"
+    class="table table-responsive table-bordered table-striped hover"
+    *ngIf="tableToShow === 'NePopisani'"
+  >
+    <thead class="table-primary"></thead>
+  </table>
+  <a class="btn btn-primary" [href]="nePopisaniExportUrl" target="_blank" *ngIf="tableToShow === 'NePopisani'"
+    >Export to Excel</a
+  >
 </div>
-{{ tableToShow }}
